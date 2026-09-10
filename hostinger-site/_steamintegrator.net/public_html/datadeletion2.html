@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Data & Account Deletion Request</title>
+    <style>
+        :root {
+            color-scheme: light dark;
+            --max-w: 720px;
+            --gap: 1rem;
+            --radius: 8px;
+            --border: 1px solid rgba(0,0,0,0.12);
+            --danger: #c62828;
+        }
+        body {
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, sans-serif;
+            line-height: 1.5;
+            margin: 0 auto;
+            padding: 2rem 1rem 4rem;
+            max-width: var(--max-w);
+        }
+        h1, h2 { line-height: 1.2; }
+        form {
+            margin-top: 1.5rem;
+            padding: 1.25rem;
+            border: var(--border);
+            border-radius: var(--radius);
+        }
+        .field {
+            display: grid;
+            gap: .35rem;
+            margin-bottom: var(--gap);
+        }
+        label { font-weight: 600; }
+        input, select, textarea {
+            width: 100%;
+            padding: .6rem .7rem;
+            border: var(--border);
+            border-radius: var(--radius);
+            font: inherit;
+        }
+        textarea { min-height: 120px; }
+        .required::after {
+            content: " *";
+            color: var(--danger);
+        }
+        .actions {
+            margin-top: 1.25rem;
+        }
+        button {
+            cursor: pointer;
+            padding: .75rem 1.1rem;
+            border-radius: var(--radius);
+            border: none;
+            font-weight: 600;
+        }
+        button[type="submit"] {
+            background: #1976d2;
+            color: #fff;
+        }
+        small { color: #666; }
+        .note {
+            background: rgba(0,0,0,0.03);
+            padding: 1rem;
+            border-radius: var(--radius);
+            border: var(--border);
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Request Deletion of Your Account & Data</h1>
+    <p>
+        Use this form to request deletion of your account and any associated personal data stored for our app.
+        After we verify your identity, we’ll process your request and notify you once it’s complete.
+    </p>
+    <p class="note">
+        If you prefer email, you can contact us directly at
+        <a href="mailto:you@yourdomain.com?subject=Data%20Deletion%20Request">orion591k1@gmail.com</a>.
+    </p>
+</header>
+
+<section aria-labelledby="how-it-works">
+    <h2 id="how-it-works">How it works</h2>
+    <ol>
+        <li>Submit this form.</li>
+        <li>We verify your request (we may contact you for more info).</li>
+        <li>We delete your account/data within the legally required time frame (typically 30 days or sooner).</li>
+        <li>We confirm completion via email.</li>
+    </ol>
+</section>
+
+<form id="delete-form" method="POST" action="https://formsubmit.co/orion591k1@gmail.com" novalidate>
+
+    <!-- Replace action with your endpoint or a Formspree URL, etc. -->
+
+    <fieldset>
+        <legend><strong>Your Details</strong></legend>
+
+        <div class="field">
+            <label for="name" class="required">Full name</label>
+            <input id="name" name="name" type="text" autocomplete="name" required />
+        </div>
+
+        <div class="field">
+            <label for="email" class="required">Email address used in the app</label>
+            <input id="email" name="email" type="email" autocomplete="email" required />
+        </div>
+
+        <div class="field">
+            <label for="country">Country/Region</label>
+            <input id="country" name="country" type="text" autocomplete="country-name" />
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend><strong>Account/App Information</strong></legend>
+
+        <div class="field">
+            <label for="appName" class="required">App name</label>
+            <input id="appName" name="appName" type="text" required />
+        </div>
+
+        <div class="field">
+            <label for="platform" class="required">Platform</label>
+            <select id="platform" name="platform" required>
+                <option value="">Select…</option>
+                <option>Android (Google Play)</option>
+                <option>iOS (App Store)</option>
+                <option>Web</option>
+                <option>Other</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <label for="userId">User ID / UID (if available)</label>
+            <input id="userId" name="userId" type="text" />
+            <small>(e.g., your Firebase UID or in-app user ID)</small>
+        </div>
+
+        <div class="field">
+            <label for="scope" class="required">What should be deleted?</label>
+            <select id="scope" name="scope" required>
+                <option value="">Select…</option>
+                <option value="account_all_data">My entire account and all associated data</option>
+                <option value="specific">Specific data only (describe below)</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <label for="details">Additional details (optional)</label>
+            <textarea id="details" name="details" placeholder="Tell us anything we should know (e.g., specific data categories to delete)…"></textarea>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend><strong>Verification</strong></legend>
+
+        <div class="field">
+            <label class="required">
+                <input type="checkbox" id="confirmOwner" name="confirmOwner" required />
+                I confirm that I am the account owner (or am legally authorized to act on their behalf).
+            </label>
+        </div>
+
+        <div class="field">
+            <label>
+                <input type="checkbox" id="consent" name="consent" />
+                I agree that you may contact me at the email above to verify and complete this request.
+            </label>
+        </div>
+
+        <!-- Optional: Insert your reCAPTCHA widget here -->
+        <div class="field">
+            <label for="captcha">CAPTCHA (if applicable)</label>
+            <input id="captcha" name="captcha" type="text" placeholder="Enter CAPTCHA if shown" />
+        </div>
+    </fieldset>
+
+    <div class="actions">
+        <button type="submit">Submit Request</button>
+    </div>
+
+    <p id="status" role="status" aria-live="polite"></p>
+</form>
+
+<footer style="margin-top:2rem;">
+    <small>
+        For more information on how we handle your data, please review our
+        <a href="https://steamintegrator.net/privacypolicy.html#request">Privacy Policy</a>.
+    </small>
+</footer>
+
+<script>
+    // Optional progressive enhancement: handle via fetch and show a friendly message
+    (function () {
+        const form = document.getElementById('delete-form');
+        const statusEl = document.getElementById('status');
+
+        if (!window.fetch) return; // old browsers fallback to normal POST
+
+        form.addEventListener('submit', async (e) => {
+            // Remove this block if you’re using classic HTML form post
+            e.preventDefault();
+
+            statusEl.textContent = 'Submitting…';
+
+            try {
+                const formData = new FormData(form);
+                const res = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!res.ok) throw new Error('Request failed');
+
+                statusEl.textContent = 'Thanks! Your request has been received. We will contact you shortly.';
+                form.reset();
+            } catch (err) {
+                console.error(err);
+                statusEl.textContent = 'There was an error submitting your request. Please try again, or email us directly at orion591k1@gmail.com';
+            }
+        });
+    })();
+</script>
+</body>
+</html>

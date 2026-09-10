@@ -1,0 +1,51 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Hostinger / server secrets
+budget-private/config.php
+.env
+.env.*
+
+# Installer files - keep these out of Git
+*.dmg
+*.exe
+
+# Database backups / exports
+*.sql
+*.sqlite
+*.db
+# Hostinger private configur
+hostinger-site/_steamintegrator.net/budget-private/config.php
+
+# Large backup archive
+*.zip
+
+# Installer files
+
+# Database/export files
+hostinger-site/_steamintegrator.net/public_html/create-sandbox-link.php
+hostinger-site/_steamintegrator.net/public_html/create_autologin_bsq8lielyjzhfag.php
+hostinger-site/_steamintegrator.net/public_html/db-test.php
+hostinger-site/_steamintegrator.net/public_html/phpinfo.php

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta name = "viewport" content="with=device-width, initial-scale=1.0">
+    <title>Leckenby and Associates LLC.</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,400;0,600;0,700;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<body>
+<section class="Contact">
+         <nav3>
+             <a href="index.html"><img src="images/Leck_Logo9.jpg" alt=""></a>
+             <div class="nav-links1" id="navLinks1">
+                     <i class="fa fa-times" onclick="hideMenu()"></i>
+                     <ul>
+                         <li><a href="index.html">HOME</a></li>
+                         <li><a href="about.html">ABOUT</a></li>
+                         <li><a href="contact.html">CONTACT</a></li>
+                         <li><a href="Services.html">SERVICES</a></li>
+                         <li><a href="Links.html">LINKS</a></li>
+                     </ul>
+                 </div>
+             <i class="fa fa-bars" onclick="showMenu()" ></i>
+         </nav3>
+    <div class="text-box4">
+         <h1> CONTACT</h1>
+    <p> Fill out the form below.</p>
+    </div>
+</section>
+    <section class="Location">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2822.546692715087!2d-121.04750650572777!3d43.12607913994505!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54c7fb3e60a931b3%3A0xf1bb9370a65356d5!2s77518%20County%20Hwy%208-12%2C%20Silver%20Lake%2C%20OR%2097638!5e0!3m2!1sen!2sus!4v1735064059007!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+            <div class="row">
+                <div class="contact-col">
+                    <div>
+                     <i class="fa fa-home"></i>
+                     <span>
+                        <h5>  77518 South St.</h5>
+                        <p>  Silver Lake, OR, 97638</p>
+                     </span>
+                 </div>
+            <!--<div class="contact-col">-->
+                 <div>
+             <i class="fa fa-phone"></i>
+                    <span>
+                       <h5> Cel (541) 786-4870 </h5>
+                        <p> 8:00AM - 5:00 PM PST</p>
+                    </span>
+                </div>
+            <!--<div class="contact-col">-->
+                 <div>
+              <i class="fa fa-envelope-o"></i>
+                    <span>
+                       <h5> kevin.leckenby@frontier.com</h5>
+                        <p>Email L&A for Information</p>
+                    </span>
+                </div>
+            </div>
+            <div class="contact-col">
+
+                <form action="formhandler.php"method="post">
+                    <input type="text" name="name" placeholder="Enter your name" required>
+                    <input type="email" name="email" placeholder="Enter Email Address" required>
+                    <input type="text" name="subject" placeholder="Enter your Subject" required>
+                    <textarea rows="8" name="message" placeholder="Message" required></textarea>
+                    <button type="submit" class="hero-btn red-btn">Send Message</button>
+                </form>
+            </div>
+                </div>
+        <!-- <a href="" class="hero-btn4">Email L&A for more Information.</a>-->
+
+   </section>
+
+<!---java Script for toggle menu------->
+<script>
+    var navLinks1 = document.getElementById("navLinks1");
+    function showMenu(){
+        navLinks1.style.right = "0"
+    }
+    function hideMenu(){
+        navLinks1.style.right = "-200px"
+    }
+</script>
+
+</body>
+</html>

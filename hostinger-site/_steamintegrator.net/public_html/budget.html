@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+            name="description"
+            content="Budget App is a private desktop budgeting application for tracking income, expenses, debts, and savings."
+    >
+
+    <title>Budget App | Leckenby and Associates LLC</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.6;
+            color: #243142;
+            background-color: #f4f7fa;
+        }
+
+        a {
+            color: #1769aa;
+        }
+
+        header {
+            background-color: #173f5f;
+            color: white;
+            padding: 18px 24px;
+        }
+
+        nav {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
+
+        .site-name {
+            margin: 0;
+            font-size: 1.3rem;
+        }
+
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        .hero {
+            padding: 80px 24px;
+            text-align: center;
+            background-color: #e7f1f8;
+        }
+
+        .hero-content {
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            margin: 0 0 16px;
+            font-size: 3rem;
+            color: #173f5f;
+        }
+
+        .hero p {
+            max-width: 700px;
+            margin: 0 auto 28px;
+            font-size: 1.2rem;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 13px 22px;
+            margin: 6px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            background-color: #1769aa;
+            color: white;
+        }
+
+        .button:hover {
+            background-color: #125487;
+        }
+
+        .button-secondary {
+            background-color: #52616b;
+        }
+
+        .button-secondary:hover {
+            background-color: #3f4b53;
+        }
+
+        main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px 24px 60px;
+        }
+
+        section {
+            padding: 45px 0;
+        }
+
+        section h2 {
+            margin-top: 0;
+            color: #173f5f;
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        .section-introduction {
+            max-width: 760px;
+            margin: 0 auto 30px;
+            text-align: center;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(240px, 1fr));
+            gap: 22px;
+        }
+
+        .card {
+            background-color: white;
+            padding: 24px;
+            border-radius: 8px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: #1769aa;
+        }
+
+        .privacy-box {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: #e9f6ee;
+            border-left: 6px solid #2f855a;
+            border-radius: 6px;
+        }
+
+        .download-box {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 34px;
+            text-align: center;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .requirements {
+            display: inline-block;
+            text-align: left;
+        }
+
+        .faq {
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        details {
+            margin-bottom: 14px;
+            padding: 16px 18px;
+            background-color: white;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        }
+
+        summary {
+            cursor: pointer;
+            font-weight: bold;
+            color: #173f5f;
+        }
+
+        footer {
+            padding: 28px 20px;
+            text-align: center;
+            color: #e8edf2;
+            background-color: #173f5f;
+        }
+
+        footer p {
+            margin: 6px 0;
+        }
+
+        footer a {
+            color: white;
+        }
+
+        @media (max-width: 700px) {
+            nav {
+                flex-direction: column;
+            }
+
+            .hero {
+                padding: 55px 20px;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <nav>
+        <p class="site-name">
+            Leckenby and Associates LLC
+        </p>
+
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="#features">Features</a>
+            <a href="#privacy">Privacy</a>
+            <a href="#download">Download</a>
+            <a href="/privacy.html">Privacy Policy</a>
+        </div>
+    </nav>
+</header>
+
+<section class="hero">
+    <div class="hero-content">
+        <h1>Budget App</h1>
+
+        <p>
+            A straightforward desktop budgeting application for
+            managing income, expenses, debts, and savings while
+            keeping your financial information on your own computer.
+        </p>
+
+        <a class="button" href="#download">
+            Download for macOS
+        </a>
+
+        <a
+                class="button button-secondary"
+                href="https://github.com/ORICAPCAVE/budget-app/releases/download/v1.0.4/Budget.App-1.0.4.dmg"
+        >
+            View on GitHub
+        </a>
+    </div>
+</section>
+
+<main>
+
+    <section id="about">
+        <h2>Take Control of Your Finances</h2>
+
+        <p class="section-introduction">
+            Budget App helps individuals and families organize their
+            everyday finances without requiring a subscription,
+            cloud account, or constant internet connection.
+        </p>
+
+        <div class="feature-grid">
+            <article class="card">
+                <h3>Simple to Use</h3>
+
+                <p>
+                    Keep track of your financial information from one
+                    organized desktop dashboard.
+                </p>
+            </article>
+
+            <article class="card">
+                <h3>Works Offline</h3>
+
+                <p>
+                    Budget App does not require an internet connection
+                    for normal budgeting activities.
+                </p>
+            </article>
+
+            <article class="card">
+                <h3>No Subscription</h3>
+
+                <p>
+                    There are no recurring monthly fees, advertisements,
+                    or paid cloud services required.
+                </p>
+            </article>
+        </div>
+    </section>
+
+    <section id="features">
+        <h2>Features</h2>
+
+        <p class="section-introduction">
+            Practical tools help you manage day-to-day finances and
+            maintain a clear record of your activity.
+        </p>
+
+        <div class="feature-grid">
+
+            <article class="card">
+                <h3>Income Management</h3>
+
+                <p>
+                    Record income sources, recurring schedules,
+                    received payments, and income history.
+                </p>
+            </article>
+
+            <article class="card">
+                <h3>Expense Tracking</h3>
+
+                <p>
+                    Organize expenses, monitor due dates, and maintain
+                    a history of completed payments.
+                </p>
+            </article>
+
+            <article class="card">
+                <h3>Debt Management</h3>
+
+                <p>
+                    Track debt balances, interest rates, minimum
+                    payments, extra payments, and payoff progress.
+                </p>
+            </article>
+
+            <article class="card">
+                <h3>Savings Tracking</h3>
+
+                <p>
+                    Record savings deposits and withdrawals while
+                    monitoring your current savings balance.
+                </p>
+            </article>
+
+            <article class="card">
+                <h3>Multiple Users</h3>
+
+                <p>
+                    Separate local user accounts keep each person's
+                    budgeting records organized independently.
+                </p>
+            </article>
+
+            <article class="card">
+                <h3>Reports</h3>
+
+                <p>
+                    Review and print financial reports and transaction
+                    histories directly from the application.
+                </p>
+            </article>
+
+            <article class="card">
+                <h3>Backup and Restore</h3>
+
+                <p>
+                    Create backup copies of your data and restore them
+                    when needed.
+                </p>
+            </article>
+
+            <article class="card">
+                <h3>Native macOS Installer</h3>
+
+                <p>
+                    The macOS installer is digitally signed and
+                    notarized by Apple.
+                </p>
+            </article>
+
+        </div>
+    </section>
+
+    <section id="privacy">
+        <h2>Privacy First</h2>
+
+        <div class="privacy-box">
+            <p>
+                Budget App stores your financial information locally
+                on your own computer using a SQLite database.
+            </p>
+
+            <p>
+                The application does not upload your financial records
+                to Leckenby and Associates LLC servers and does not
+                contain advertising or application analytics.
+            </p>
+
+            <p>
+                <a href="/privacy.html">
+                    Read the complete Privacy Policy
+                </a>
+            </p>
+        </div>
+    </section>
+
+    <section id="download">
+        <h2>Download Budget App</h2>
+
+        <div class="download-box">
+            <h3>Budget App v1.0.3</h3>
+
+            <p>
+                Download the latest signed and notarized macOS
+                installer from GitHub.
+            </p>
+
+            <!--
+                Replace the link below with the exact GitHub release
+                address after v1.0.3 is published.
+            -->
+
+            <a
+                    class="button"
+                    href="https://github.com/ORICAPCAVE/budget-app/releases/download/v1.0.4/Budget.App-1.0.4.dmg"
+            >
+                View Latest Release
+            </a>
+
+            <h3>System Requirements</h3>
+
+            <ul class="requirements">
+                <li>macOS</li>
+                <li>Approximately 100 MB of free storage</li>
+                <li>No internet connection required for normal use</li>
+            </ul>
+
+            <p>
+                After downloading the DMG, open it and drag
+                Budget App into the Applications folder.
+            </p>
+        </div>
+    </section>
+
+    <section id="story">
+        <h2>The Story Behind Budget App</h2>
+
+        <p class="section-introduction">
+            Budget App began as a personal software project focused on
+            privacy, reliability, and practical financial organization.
+            It was developed as an alternative to budgeting services
+            that require subscriptions, cloud storage, or access to a
+            user's financial accounts.
+        </p>
+    </section>
+
+    <section id="roadmap">
+        <h2>Planned Improvements</h2>
+
+        <div class="feature-grid">
+            <article class="card">
+                <h3>Charts and Trends</h3>
+                <p>
+                    Additional visual summaries of financial activity.
+                </p>
+            </article>
+
+            <article class="card">
+                <h3>Data Export</h3>
+                <p>
+                    Expanded options for exporting financial records.
+                </p>
+            </article>
+
+            <article class="card">
+                <h3>Additional Reports</h3>
+                <p>
+                    More detailed summaries and printing options.
+                </p>
+            </article>
+        </div>
+    </section>
+
+    <section id="faq">
+        <h2>Frequently Asked Questions</h2>
+
+        <div class="faq">
+
+            <details>
+                <summary>
+                    Does Budget App require an internet connection?
+                </summary>
+
+                <p>
+                    No. Budget App operates locally on your computer
+                    during normal use.
+                </p>
+            </details>
+
+            <details>
+                <summary>
+                    Is my financial information stored online?
+                </summary>
+
+                <p>
+                    No. Your information is stored locally in a SQLite
+                    database on your computer.
+                </p>
+            </details>
+
+            <details>
+                <summary>
+                    Does Budget App require a subscription?
+                </summary>
+
+                <p>
+                    No. Budget App does not require a monthly
+                    subscription.
+                </p>
+            </details>
+
+            <details>
+                <summary>
+                    Can I back up my information?
+                </summary>
+
+                <p>
+                    Yes. The application includes backup and restore
+                    features.
+                </p>
+            </details>
+
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <p>
+        &copy; 2026 Leckenby and Associates LLC.
+        All rights reserved.
+    </p>
+
+    <p>
+        <a href="/privacy.html">Privacy Policy</a>
+        |
+        <a href="https://github.com/ORICAPCAVE/budget-app-starter">
+            GitHub
+        </a>
+    </p>
+</footer>
+
+</body>
+</html>

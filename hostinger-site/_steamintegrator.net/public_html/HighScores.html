@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#0000FF">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+     <meta name="google-site-verification" content="LJkmYjemyxYuEwThQ361NoAcF3OWKlipiDYUaBXsH6c" />
+    <script src="https://app.termly.io/resource-blocker/264d1ed0-9bc4-4549-ad18-606adb43c7e0?autoBlock=on"></script>
+    
+    <title>The High Slug Bug Scorer Page</title>
+    
+    <style>
+        :root {
+            --blue-bg: #0000FF;
+            --title-yellow: #FFFF00;
+            --teal: #008080;
+            --yellow: #FFFF00;
+            --copper: #B87333;
+            --gold: #FFD700;
+            --line: #000000; /* thin black lines */
+        }
+
+        * { box-sizing: border-box; }
+        html, body { height: 100%; }
+        body {
+            margin: 0;
+            background: var(--blue-bg);
+            color: #FFFFFF;
+            font: 16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+        }
+
+        .wrap {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 24px 16px 40px;
+            overflow-x: auto; /* allow horizontal scroll on narrow screens */
+            position: relative; /* keep content above fireworks */
+            z-index: 1;
+        }
+
+        h1 {
+            margin: 0 0 24px 0;
+            text-align: center;
+            font-weight: 800;
+            color: var(--title-yellow);
+            text-shadow: 0 2px 0 rgba(0,0,0,0.25);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(260px, 1fr));
+            gap: 0; /* thin borders instead of gaps */
+            background: var(--line); /* helps render 1px column lines cleanly */
+            min-width: 1040px; /* keep 4 columns across; scroll if viewport is narrower */
+        }
+
+        .col {
+            background: var(--blue-bg);
+            padding: 16px 14px 24px;
+            border-left: 1px solid var(--line);
+        }
+        .col:first-child { border-left: none; }
+
+        .car {
+            width: 100%;
+            height: 140px; /* fit neatly in the column */
+            display: block;
+            margin: 0 auto 10px;
+            object-fit: contain; /* show the full cutout without cropping */
+        }
+
+        h2 {
+            margin: 8px 0 12px;
+            font-size: 20px;
+            line-height: 1.2;
+            text-align: center;
+            font-weight: 700;
+            color: var(--yellow); /* headers in yellow */
+        }
+
+        .list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .list li {
+            padding: 8px 10px;
+            margin: 6px 0;
+            color: var(--yellow); /* player data in yellow */
+            background: transparent; /* no pill background */
+            border: none;            /* clean look on blue bg */
+        }
+        .entry-name { font-weight: 700; color: var(--yellow); }
+        .entry-date { opacity: 1; color: var(--yellow); }
+
+        /* Fireworks canvas lives behind all content */
+        #fireworks {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* clicks pass through */
+            z-index: 0;           /* below .wrap */
+        }
+        html, body { height: 100%; }
+        body { margin: 0; }
+
+        .page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;   /* sits above fireworks */
+            z-index: 1;
+        }
+
+        .wrap {
+            flex: 1 0 auto;       /* main content takes remaining height */
+            /* keep your existing .wrap styles (padding, overflow-x, etc.) */
+        }
+
+        #info-footer {
+            flex-shrink: 0;
+            background: #0000FF;  /* same as page background */
+            border-top: 1px solid #000;  /* thin black divider */
+            color: #fff;
+            padding: 16px;
+        }
+        #info-footer summary { color: #FFFF00; font-weight: 700; cursor: pointer; }
+        /* Fluid sizes */
+        h1 { font-size: clamp(18px, 4.5vw, 32px); }
+        h2 { font-size: clamp(16px, 3.8vw, 20px); }
+        .car { height: clamp(96px, 22vw, 160px); }
+
+        /* Let the grid wrap on small screens */
+        @media (max-width: 1024px) {
+            .grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                min-width: 0; /* override any fixed min-width */
+            }
+        }
+
+        @media (max-width: 560px) {
+            .grid {
+                grid-template-columns: 1fr;
+                min-width: 0; /* ensure no forced horizontal scroll */
+            }
+            .wrap { padding: 16px 12px 24px; }
+        }
+
+        /* Optional: scroll inside each column on phones with sticky headers */
+        @media (max-width: 560px) {
+            .grid { align-items: start; }
+            .col { display: flex; flex-direction: column; }
+            h2 { position: sticky; top: 0; background: #0000FF; z-index: 1; padding: 6px 0; }
+            .list { overflow-y: auto; max-height: 60vh; -webkit-overflow-scrolling: touch; }
+        }
+
+        /* Improve tap targets and Details toggles in the footer */
+        #info-footer { padding: 16px env(safe-area-inset-right) 16px env(safe-area-inset-left); }
+        #info-footer summary {
+            padding: 10px 0;
+            font-size: clamp(14px, 3.8vw, 16px);
+        }
+        #info-footer a {
+            color: var(--title-yellow);                 /* yellow on blue = ~8:1 contrast (AAA) */
+            text-decoration-color: rgba(255,255,0,.7);
+            font-weight: 700;
+        }
+        #info-footer a:hover,
+        #info-footer a:focus {
+            color: #FFFFFF;
+            text-decoration-color: #FFFFFF;
+        }
+        #info-footer a:visited { color: var(--title-yellow); }
+        #info-footer a:focus-visible { outline: 2px dashed var(--title-yellow); outline-offset: 2px; }
+        
+        .btn{
+    display:inline-block; padding:.65rem 1rem; border-radius:12px;
+    text-decoration:none; font-weight:600; border:1px solid #ddd;
+  }
+  .btn:hover{ box-shadow:0 2px 8px rgba(0,0,0,.08) }
+        
+
+        body { padding-bottom: env(safe-area-inset-bottom); } /* play nice with iOS home indicator */
+
+    </style>
+</head>
+<body>
+<canvas id="fireworks" aria-hidden="true"></canvas>
+<div class="page">
+<div class="wrap">
+    <h1><strong style="color: var(--title-yellow)">The High Slug Bug Scorer Page</strong></h1>
+    
+
+    <div class="grid">
+        <!-- 10 COLUMN (TEAL) -->
+        <section class="col" aria-labelledby="hdr-10">
+            <!-- Stylized VW Beetle SVG, colored TEAL -->
+            <img class="car" src="images/Yellow.jpg" width="600" height="200" decoding="async"
+                 loading="lazy" alt="Teal Volkswagen Beetle"/>
+            <h2 id="hdr-10">10 Slug Bug Achievers</h2>
+            <ul class="list" id="list-10">
+                <!-- Replace these samples with real entries -->
+                <li><span class="entry-name">Sample Player</span> — <span class="entry-date">2025-09-09</span></li>
+            </ul>
+        </section>
+
+        <!-- 50 COLUMN (YELLOW) -->
+        <section class="col" aria-labelledby="hdr-50">
+            <img class="car" src="images/copper2.jpg" width="600"height="200" decoding="async" loading="lazy"
+                 alt="Yellow Volkswagen Beetle"/>
+            <h2 id="hdr-50">50 Slug Bug Achievers</h2>
+            <ul class="list" id="list-50">
+                <li><span class="entry-name">Sample Player</span> — <span class="entry-date">2025-09-09</span></li>
+            </ul>
+        </section>
+
+        <!-- 100 COLUMN (COPPER) -->
+        <section class="col" aria-labelledby="hdr-100">
+            <img class="car" src="images/Teal2.jpg" width="600"height="200" decoding="async"loading="lazy"
+                 alt="Copper Volkswagen Beetle"/>
+            <h2 id="hdr-100">100 Slug Bug Achievers</h2>
+            <ul class="list" id="list-100">
+                <li><span class="entry-name">Sample Player</span> — <span class="entry-date">2025-09-09</span></li>
+            </ul>
+        </section>
+
+        <!-- 1000 COLUMN (GOLD) -->
+        <section class="col" aria-labelledby="hdr-1000">
+            <img class="car" src="images/beetle-gold-cutout-solid3.png"width="600"height="200" decoding="async" loading="lazy"
+                 alt="Gold Volkswagen Beetle"/>
+            <h2 id="hdr-1000">1000 Slug Bug Achievers</h2>
+            <ul class="list" id="list-1000">
+                <li><span class="entry-name">Sample Player</span> — <span class="entry-date">2025-09-09</span></li>
+            </ul>
+        </section>
+    </div>
+   
+
+    <footer id="info-footer">
+        <section style="max-width:980px;margin:36px auto 24px;padding:16px;border-top:1px solid #000;">
+            <details>
+                <summary style="cursor:pointer;color:#FFFF00;font-weight:700;">About this scoreboard</summary>
+                <div style="margin-top:10px;color:#fff;">
+                    <p>This public scoreboard shows a player’s display name and the date they reached a Slug Bug milestone (10, 50, 100, 1000).</p>
+                </div>
+            </details>
+
+            <details>
+                <summary style="cursor:pointer;color:#FFFF00;font-weight:700;">Terms of submission</summary>
+                <div style="margin-top:10px;color:#fff;">
+                    <ul>
+                        <li>By submitting a high score, you consent to public display of your <strong>display name</strong> and <strong>achievement date</strong>.</li>
+                        <li>No offensive, profane, or misleading names. We may edit or remove entries at our discretion.</li>
+                        <li>No cheating or automated submissions. Suspicious entries may be removed.</li>
+                        <li>One person per account. We may consolidate duplicates.</li>
+                        <li>To request removal or correction, email: <a href="mailto:orion591k1@gmail.com"></a>orion591k1@gmail.com</li>
+                    </ul>
+                </div>
+            </details>
+
+            <details>
+                <summary style="cursor:pointer;color:#FFFF00;font-weight:700;">Privacy notice</summary>
+                <div style="margin-top:10px;color:#fff;">
+                    <p><strong>What we collect:</strong> display name you provide, milestone tier, and timestamp at submission. We also store your Firebase user ID for fraud prevention and moderation; this is <em>not</em> shown on the site.</p>
+                    <p><strong>How we use it:</strong> to show the scoreboard and keep it fair (e.g., remove spam/cheating).</p>
+                    <p><strong>Where it’s stored:</strong> Google Firebase (U.S./global infrastructure). We don’t sell or rent your data.</p>
+                    <p><strong>Retention:</strong> entries may be kept indefinitely for historical high scores. You can request deletion via <a href="mailto:orion591k1@gmail.com">orion591k1@gmail.com</a>.</p>
+                    <p><strong>Kids:</strong> This site isn’t directed to children under 13. Don’t submit a child’s name. Parents can request removal at the email above.</p>
+                    <p><strong>Security:</strong> writes to the scoreboard require a signed-in app account; public viewing is read-only.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary style="cursor:pointer;color:#FFFF00;font-weight:700;">Image & trademark notice</summary>
+                <div style="margin-top:10px;color:#fff;">
+                    <p>Vehicle images © their respective owners and used with permission. “Volkswagen” and “Beetle” are trademarks of Volkswagen AG; this fan page is not affiliated with or endorsed by Volkswagen.</p>
+                </div>
+            </details>
+                <a class="btn" href="/achievements.php">View Achievements Table</a>
+            <p style="margin-top:12px;color:#ffffff;">Last updated: 2025-09-09 • Contact: <a href="mailto:orion591k1@gmail.com">orion591k1@gmail.com</a></p>
+        </section>
+    </footer>
+    </div>
+</div>
+<script>
+    // Reads the array your PHP writes to /data/highscores.json
+    // Each item is like: { tier: 10|50|100|1000, total: number, name: string, date: "YYYY-MM-DD", ts: unix }
+    const ENDPOINT = '/data/highscores.json';  // same origin, no CORS
+    const TIER_MAP = {10:'list-10', 50:'list-50', 100:'list-100', 1000:'list-1000'};
+
+    function escapeHtml(s){
+        return String(s || '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+    }
+    function ymdFromTs(ts){
+        try {
+            const d = new Date((ts||0)*1000);
+            if (isNaN(d.getTime())) return '';
+            const y = d.getUTCFullYear();
+            const m = String(d.getUTCMonth()+1).padStart(2,'0');
+            const day = String(d.getUTCDate()).padStart(2,'0');
+            return `${y}-${m}-${day}`;
+        } catch { return ''; }
+    }
+
+    async function loadScores(){
+        const res = await fetch(ENDPOINT + '?t=' + Date.now(), { cache: 'no-store' });
+        if (!res.ok) { console.error('Load failed', res.status); return; }
+
+        let items = await res.json();
+        // Allow both array and { "10":[...], "50":[...], ... } shapes
+        let tiers = {10:[],50:[],100:[],1000:[]};
+
+        if (Array.isArray(items)) {
+            for (const r of items) {
+                const tier = Number(r.tier);
+                if (!tiers[tier]) continue;
+                // Normalize fields
+                const name = (r.name || '').toString();
+                let date = r.date || '';
+                if (!date) date = ymdFromTs(r.ts);
+                tiers[tier].push({ name, date, total: Number(r.total)||0, ts: Number(r.ts)||0 });
+            }
+        } else if (items && typeof items === 'object') {
+            for (const t of Object.keys(TIER_MAP)) {
+                tiers[t] = (items[t] || items[String(t)] || []).map(r => ({
+                    name: (r.name||'').toString(),
+                    date: (r.date||'').toString(),
+                    total: Number(r.total)||0,
+                    ts: Number(r.ts)||0
+                }));
+            }
+        }
+
+        // Sort each tier: total desc, then newest first, then name
+        for (const t of Object.keys(TIER_MAP)) {
+            tiers[t].sort((a,b) => (b.total - a.total) || (b.ts - a.ts) || a.name.localeCompare(b.name));
+        }
+
+        // Render
+        for (const t of Object.keys(TIER_MAP)) {
+            const el = document.getElementById(TIER_MAP[t]);
+            if (!el) continue;
+            const arr = tiers[t];
+            el.innerHTML = '';
+            if (!arr.length) {
+                const li = document.createElement('li');
+                li.textContent = 'No records yet — be the first!';
+                el.appendChild(li);
+                continue;
+            }
+            for (const r of arr.slice(0, 100)) {
+                const li = document.createElement('li');
+                li.innerHTML = `
+          <span class="entry-name">${escapeHtml(r.name || 'Anonymous')}</span>
+           — <span class="entry-date">${escapeHtml(r.date || '')}</span>`;
+                el.appendChild(li);
+            }
+        }
+    }
+
+    loadScores();
+    // Optional: refresh every minute
+    // setInterval(loadScores, 60000);
+</script>
+
+<script>
+    (function () {
+        const media = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
+        if (media && media.matches) return;
+
+        const c = document.getElementById('fireworks');
+        if (!c) return;
+        const ctx = c.getContext('2d');
+        const DPR = Math.min(window.devicePixelRatio || 1, 2);
+
+        function resize() {
+            const w = window.innerWidth, h = window.innerHeight;
+            c.width = Math.floor(w * DPR);
+            c.height = Math.floor(h * DPR);
+            c.style.width = w + 'px';
+            c.style.height = h + 'px';
+        }
+        window.addEventListener('resize', resize, { passive: true });
+        resize();
+
+        const COLORS = ['#00FFFF', '#FFFF00', '#B87333', '#FFD700', '#FFFFFF']; // teal/yellow/copper/gold/white
+        const GRAVITY = 0.06 * DPR;
+        const DRAG = 0.985;
+
+        // Scale effect by screen size & DPR, cap on phones
+        function cap() {
+            const AREA = window.innerWidth * window.innerHeight;
+            const BASE_CAP = (window.innerWidth <= 600) ? 350 : 900;
+            return Math.min(BASE_CAP, Math.floor(AREA / 10));
+        }
+        let MAX_PARTICLES = cap();
+        window.addEventListener('resize', () => { MAX_PARTICLES = cap(); }, { passive: true });
+
+        let particles = [];
+        let last = 0;
+
+        function rnd(a, b) { return a + Math.random() * (b - a); }
+
+        function burst(x, y, count) {
+            for (let i = 0; i < count; i++) {
+                const ang = (i / count) * Math.PI * 2 + rnd(-0.15, 0.15);
+                const spd = rnd(1.5, 3.8) * DPR;
+                const life = rnd(50, 90);
+                particles.push({
+                    x, y,
+                    vx: Math.cos(ang) * spd,
+                    vy: Math.sin(ang) * spd,
+                    a: 1,
+                    decay: 1 / life,
+                    size: rnd(1.2, 2.2) * DPR,
+                    color: COLORS[(Math.random() * COLORS.length) | 0]
+                });
+            }
+        }
+
+        function tick(ts) {
+            const dt = Math.min((ts - (last || ts)) / 16.6667, 2);
+            last = ts;
+
+            ctx.clearRect(0, 0, c.width, c.height);
+
+            for (let i = particles.length - 1; i >= 0; i--) {
+                const p = particles[i];
+                p.vx *= DRAG;
+                p.vy = p.vy * DRAG + GRAVITY;
+                p.x += p.vx * dt;
+                p.y += p.vy * dt;
+                p.a -= p.decay * dt;
+                if (p.a <= 0 || p.y > c.height + 10) { particles.splice(i, 1); continue; }
+                ctx.globalAlpha = Math.max(p.a, 0);
+                ctx.fillStyle = p.color;
+                ctx.fillRect(p.x, p.y, p.size, p.size);
+            }
+
+            const spawnProb = (window.innerWidth <= 600) ? 0.035 : 0.06;
+            if (particles.length < MAX_PARTICLES && Math.random() < spawnProb) {
+                burst(Math.random() * c.width, (Math.random() * 0.4 + 0.1) * c.height, 60);
+            }
+
+            requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+
+        // Click to celebrate exactly where the user clicks
+        window.addEventListener('click', function (e) {
+            const rect = c.getBoundingClientRect();
+            const x = (e.clientX - rect.left) * DPR;
+            const y = (e.clientY - rect.top) * DPR;
+            burst(x, y, 90);
+        }, { passive: true });
+    })();
+</script>
+
+</body>
+</html>

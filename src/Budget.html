@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Budget App is a private desktop budgeting application for Mac and Windows that helps you track income, expenses, debts, savings, and cash flow without storing your financial records in the cloud.">
+    <title>Budget App for Mac & Windows | Leckenby and Associates LLC</title>
+
+    <style>
+        :root {
+            --navy: #173f5f;
+            --blue: #1769aa;
+            --blue-dark: #125487;
+            --ink: #243142;
+            --muted: #607080;
+            --surface: #ffffff;
+            --soft: #f4f7fa;
+            --soft-blue: #e7f1f8;
+            --green: #2f855a;
+            --green-soft: #e9f6ee;
+            --border: #dbe3ea;
+            --shadow: 0 10px 28px rgba(23, 63, 95, 0.10);
+        }
+
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.6;
+            color: var(--ink);
+            background: var(--soft);
+        }
+
+        img { max-width: 100%; display: block; }
+        a { color: var(--blue); }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(23, 63, 95, 0.97);
+            color: white;
+            box-shadow: 0 2px 12px rgba(0,0,0,.12);
+        }
+
+        nav {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
+
+        .site-name {
+            margin: 0;
+            font-size: 1.15rem;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: .95rem;
+        }
+
+        .nav-links a:hover { text-decoration: underline; }
+
+        .hero {
+            background: linear-gradient(180deg, var(--soft-blue), #f7fbfe);
+            padding: 78px 24px 58px;
+        }
+
+        .hero-grid {
+            max-width: 1180px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.05fr .95fr;
+            gap: 46px;
+            align-items: center;
+        }
+
+        .eyebrow {
+            display: inline-block;
+            margin-bottom: 12px;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: #d8ebf7;
+            color: var(--navy);
+            font-size: .88rem;
+            font-weight: 700;
+        }
+
+        h1 {
+            margin: 0 0 18px;
+            color: var(--navy);
+            font-size: clamp(2.55rem, 5vw, 4.4rem);
+            line-height: 1.04;
+            letter-spacing: -.03em;
+        }
+
+        .hero-copy {
+            max-width: 670px;
+            margin: 0 0 26px;
+            font-size: 1.2rem;
+            color: #3b4b5d;
+        }
+
+        .button-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 24px 0 12px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 13px 22px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            background: var(--blue);
+            color: white;
+            border: 1px solid transparent;
+        }
+
+        .button:hover { background: var(--blue-dark); }
+
+        .button-secondary {
+            background: white;
+            color: var(--navy);
+            border-color: #b8cad8;
+        }
+
+        .button-secondary:hover { background: #eef5fa; }
+
+        .microcopy {
+            margin: 8px 0 0;
+            color: var(--muted);
+            font-size: .95rem;
+        }
+
+        .hero-shot {
+            background: white;
+            padding: 10px;
+            border-radius: 14px;
+            box-shadow: var(--shadow);
+            border: 1px solid #d6e0e8;
+        }
+
+        .hero-shot img { border-radius: 8px; }
+
+        main {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 18px 24px 70px;
+        }
+
+        section { padding: 54px 0; }
+
+        h2 {
+            margin: 0 0 12px;
+            color: var(--navy);
+            text-align: center;
+            font-size: clamp(1.8rem, 3vw, 2.5rem);
+        }
+
+        .section-introduction {
+            max-width: 780px;
+            margin: 0 auto 34px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 1.08rem;
+        }
+
+        .privacy-box {
+            max-width: 920px;
+            margin: 0 auto;
+            padding: 30px 32px;
+            background: var(--green-soft);
+            border-left: 6px solid var(--green);
+            border-radius: 10px;
+            box-shadow: 0 6px 18px rgba(47,133,90,.08);
+        }
+
+        .privacy-box h3 {
+            margin-top: 0;
+            color: #236745;
+            font-size: 1.45rem;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 22px;
+        }
+
+        .card {
+            background: var(--surface);
+            padding: 24px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            box-shadow: 0 5px 18px rgba(23,63,95,.06);
+        }
+
+        .card h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: var(--blue);
+        }
+
+        .platform-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 24px;
+        }
+
+        .platform-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 28px;
+            box-shadow: var(--shadow);
+        }
+
+        .platform-card h3 {
+            color: var(--navy);
+            margin-top: 0;
+            font-size: 1.45rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 9px;
+            margin-bottom: 12px;
+            border-radius: 999px;
+            background: #eef4f8;
+            color: #41566a;
+            font-size: .83rem;
+            font-weight: 700;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 24px;
+        }
+
+        figure {
+            margin: 0;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        figure img { width: 100%; }
+
+        figcaption {
+            padding: 14px 16px 18px;
+            color: var(--muted);
+            font-size: .95rem;
+        }
+
+        .pricing {
+            max-width: 760px;
+            margin: 0 auto;
+            background: white;
+            border: 2px solid #c9dce9;
+            border-radius: 14px;
+            padding: 34px;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .price {
+            margin: 8px 0 4px;
+            color: var(--navy);
+            font-size: 3.4rem;
+            line-height: 1;
+            font-weight: 800;
+        }
+
+        .price small {
+            font-size: 1rem;
+            color: var(--muted);
+            font-weight: 400;
+        }
+
+        .pricing ul {
+            max-width: 420px;
+            margin: 24px auto;
+            padding-left: 22px;
+            text-align: left;
+        }
+
+        .coming-soon {
+            display: inline-block;
+            padding: 8px 12px;
+            margin-top: 8px;
+            border-radius: 8px;
+            background: #fff4d8;
+            color: #715000;
+            font-weight: 700;
+        }
+
+        .download-box {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+            text-align: center;
+            background: white;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+
+        .requirements {
+            display: inline-block;
+            text-align: left;
+            margin: 12px auto 0;
+        }
+
+        .faq { max-width: 900px; margin: 0 auto; }
+
+        details {
+            margin-bottom: 14px;
+            padding: 16px 18px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 8px rgba(0,0,0,.04);
+        }
+
+        summary {
+            cursor: pointer;
+            font-weight: 700;
+            color: var(--navy);
+        }
+
+        footer {
+            padding: 30px 20px;
+            text-align: center;
+            color: #e8edf2;
+            background: var(--navy);
+        }
+
+        footer p { margin: 6px 0; }
+        footer a { color: white; }
+
+        @media (max-width: 900px) {
+            .hero-grid,
+            .feature-grid,
+            .platform-grid,
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+
+            .hero { padding-top: 54px; }
+        }
+
+        @media (max-width: 700px) {
+            nav { flex-direction: column; align-items: flex-start; }
+            .nav-links { gap: 12px 16px; }
+            main { padding-left: 18px; padding-right: 18px; }
+            .hero { padding-left: 18px; padding-right: 18px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <nav>
+        <p class="site-name">Leckenby and Associates LLC</p>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="#features">Features</a>
+            <a href="#screenshots">Screenshots</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#download">Download</a>
+            <a href="/privacy.html">Privacy</a>
+        </div>
+    </nav>
+</header>
+
+<section class="hero">
+    <div class="hero-grid">
+        <div>
+            <span class="eyebrow">Desktop budgeting for Mac & Windows</span>
+            <h1>Budget App</h1>
+            <p class="hero-copy">
+                Track income, expenses, debts, savings, and cash flow without connecting your bank accounts or storing your financial records in the cloud.
+            </p>
+
+            <div class="button-row">
+                <a class="button" href="#pricing">View Pricing</a>
+                <a class="button button-secondary" href="#screenshots">See the App</a>
+            </div>
+
+            <p class="microcopy">One-time purchase • No subscription • Local data storage</p>
+        </div>
+
+        <div class="hero-shot">
+            <img src="images/dashboard-income.png" alt="Budget App dashboard showing income, expenses, savings, and cash flow information">
+        </div>
+    </div>
+</section>
+
+<main>
+
+    <section id="privacy">
+        <h2>Your Budget Belongs to You</h2>
+        <p class="section-introduction">
+            Budget App is designed for people who want useful budgeting tools without handing their personal financial records to an online service.
+        </p>
+
+        <div class="privacy-box">
+            <h3>Privacy-first by design</h3>
+            <p>
+                Your budgeting information is stored locally on your computer in a SQLite database. Budget App does not require a cloud account, does not require access to your bank accounts, and does not upload your financial records to Leckenby and Associates LLC servers.
+            </p>
+            <p>
+                Normal budgeting work can be done without an internet connection, and the application does not contain advertising or application analytics.
+            </p>
+            <p><a href="/privacy.html">Read the complete Privacy Policy</a></p>
+        </div>
+    </section>
+
+    <section id="features">
+        <h2>Practical Tools for Everyday Finances</h2>
+        <p class="section-introduction">
+            A focused desktop application for organizing recurring income, expenses, debt payments, savings, and financial history in one place.
+        </p>
+
+        <div class="feature-grid">
+            <article class="card">
+                <h3>Income Management</h3>
+                <p>Track recurring income sources, received payments, upcoming dates, and income history.</p>
+            </article>
+
+            <article class="card">
+                <h3>Expense Tracking</h3>
+                <p>Organize recurring expenses, monitor due dates, mark payments, search entries, and review payment history.</p>
+            </article>
+
+            <article class="card">
+                <h3>Debt Payoff Planning</h3>
+                <p>Track balances, interest rates, minimum payments, payoff time, remaining interest, and negative-amortization warnings.</p>
+            </article>
+
+            <article class="card">
+                <h3>Savings Accounts</h3>
+                <p>Maintain multiple savings accounts and record deposits, withdrawals, balances, dates, and comments.</p>
+            </article>
+
+            <article class="card">
+                <h3>Reports & Printing</h3>
+                <p>Review cash flow, spending, income, expense, debt, and savings history with printable reports.</p>
+            </article>
+
+            <article class="card">
+                <h3>Backup & Restore</h3>
+                <p>Create local backups of your budgeting data and restore them when needed.</p>
+            </article>
+
+            <article class="card">
+                <h3>Multiple Local Users</h3>
+                <p>Separate user accounts keep budgeting records organized independently on the same computer.</p>
+            </article>
+
+            <article class="card">
+                <h3>Password Security</h3>
+                <p>Local login and recovery-key support help protect access without requiring an online account.</p>
+            </article>
+
+            <article class="card">
+                <h3>Scrollable Dashboard</h3>
+                <p>A flexible dashboard keeps totals and account registers accessible on different screen sizes.</p>
+            </article>
+        </div>
+    </section>
+
+    <section id="platforms">
+        <h2>Available for Mac and Windows</h2>
+        <p class="section-introduction">
+            One Budget App purchase is intended to cover either desktop platform. Final download links will be connected after checkout is set up.
+        </p>
+
+        <div class="platform-grid">
+            <article class="platform-card">
+                <span class="badge">macOS</span>
+                <h3>Budget App for Mac</h3>
+                <p>The macOS installer is digitally signed and notarized by Apple for a smoother installation experience.</p>
+                <p><strong>Installer:</strong> DMG</p>
+            </article>
+
+            <article class="platform-card">
+                <span class="badge">Windows 11</span>
+                <h3>Budget App for Windows</h3>
+                <p>The Windows edition includes the same core budgeting, reporting, savings, and debt-management features.</p>
+                <p><strong>Installer:</strong> EXE</p>
+            </article>
+        </div>
+    </section>
+
+    <section id="screenshots">
+        <h2>See Budget App in Action</h2>
+        <p class="section-introduction">
+            These screenshots use demonstration data and show the current desktop interface and reporting tools.
+        </p>
+
+        <div class="gallery">
+            <figure>
+                <img src="images/expenses.png" alt="Budget App expense tracking screen">
+                <figcaption>Expense tracking with due-date indicators, categories, payment controls, search, and report access.</figcaption>
+            </figure>
+
+            <figure>
+                <img src="images/spending-report.png" alt="Budget App spending report with category chart">
+                <figcaption>Spending Report with category totals and the underlying expense-payment history.</figcaption>
+            </figure>
+
+            <figure>
+                <img src="images/debt.png" alt="Budget App debt payoff planning screen">
+                <figcaption>Debt payoff planning with interest information, months-to-payoff estimates, due dates, and alerts.</figcaption>
+            </figure>
+
+            <figure>
+                <img src="images/savings.png" alt="Budget App savings transaction dialog">
+                <figcaption>Savings transactions for deposits, withdrawals, account balances, dates, and comments.</figcaption>
+            </figure>
+        </div>
+    </section>
+
+    <section id="pricing">
+        <h2>Simple One-Time Pricing</h2>
+
+        <p class="section-introduction">
+            No monthly subscription and no paid cloud account required.
+        </p>
+
+        <div class="pricing">
+            <h3>Budget App for Mac &amp; Windows</h3>
+
+            <div class="price">
+                $9.99 <small>one time</small>
+            </div>
+
+            <ul>
+                <li>Mac and Windows desktop editions</li>
+                <li>No recurring subscription</li>
+                <li>Local financial data storage</li>
+                <li>Income, expense, debt, and savings tools</li>
+                <li>Reports, printing, backup, and restore</li>
+            </ul>
+
+            <div class="paypal-purchase">
+
+                <style>
+                    .pp-CVETJLQ6WPW4C {
+                        text-align: center;
+                        border: none;
+                        border-radius: 0.25rem;
+                        min-width: 11.625rem;
+                        padding: 0 2rem;
+                        height: 2.625rem;
+                        font-weight: bold;
+                        background-color: #FFD140;
+                        color: #000000;
+                        font-family: "Helvetica Neue", Arial, sans-serif;
+                        font-size: 1rem;
+                        line-height: 1.25rem;
+                        cursor: pointer;
+                    }
+                </style>
+
+                <form action="https://www.paypal.com/ncp/payment/CVETJLQ6WPW4C"
+                      method="post"
+                      target="_blank"
+                      style="display:inline-grid;
+                         justify-items:center;
+                         align-content:start;
+                         gap:0.5rem;">
+
+                    <input class="pp-CVETJLQ6WPW4C"
+                           type="submit"
+                           value="Buy Now">
+
+                    <img src="https://www.paypalobjects.com/images/Debit_Credit_APM.svg"
+                         alt="Accepted debit and credit cards">
+
+                    <section style="font-size:0.75rem;">
+                        Powered by
+                        <img src="https://www.paypalobjects.com/paypal-ui/logos/svg/paypal-wordmark-color.svg"
+                             alt="PayPal"
+                             style="height:0.875rem; vertical-align:middle;">
+                    </section>
+
+                </form>
+
+            </div>
+        </div>
+    </section>
+    <section id="download">
+        <h2>Download & Installation</h2>
+        <div class="download-box">
+            <h3>Current release</h3>
+            <p>
+                The Mac and Windows download links will be connected after the purchase and delivery process is finalized.
+            </p>
+
+            <ul class="requirements">
+                <li>macOS or Windows 11</li>
+                <li>Approximately 100 MB of free storage</li>
+                <li>No internet connection required for normal budgeting use</li>
+            </ul>
+
+            <p class="microcopy">
+                Existing public GitHub download links have intentionally been left out of this draft while the purchase flow is being decided.
+            </p>
+        </div>
+    </section>
+
+    <section id="story">
+        <h2>The Story Behind Budget App</h2>
+        <p class="section-introduction">
+            Budget App began as a practical desktop software project focused on privacy, reliability, and useful financial organization. It was created as an alternative to budgeting services that require subscriptions, cloud storage, or access to a user's financial accounts.
+        </p>
+    </section>
+
+    <section id="faq">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq">
+            <details>
+                <summary>Does Budget App require an internet connection?</summary>
+                <p>No. Budget App operates locally on your computer during normal use.</p>
+            </details>
+
+            <details>
+                <summary>Is my financial information stored online?</summary>
+                <p>No. Your budgeting information is stored locally in a SQLite database on your computer.</p>
+            </details>
+
+            <details>
+                <summary>Does Budget App connect to my bank?</summary>
+                <p>No. Budget App is designed for manual budgeting and does not require access to your financial accounts.</p>
+            </details>
+
+            <details>
+                <summary>Does Budget App require a subscription?</summary>
+                <p>No. The planned price is a one-time purchase rather than a recurring monthly subscription.</p>
+            </details>
+
+            <details>
+                <summary>Can I back up my information?</summary>
+                <p>Yes. The application includes local backup and restore features.</p>
+            </details>
+
+            <details>
+                <summary>Can I use the same purchase for Mac or Windows?</summary>
+                <p>The current plan is one Budget App purchase for either desktop platform. Final download and delivery details will be stated before sales begin.</p>
+            </details>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <p>&copy; 2026 Leckenby and Associates LLC. All rights reserved.</p>
+    <p>
+        <a href="/privacy.html">Privacy Policy</a>
+        &nbsp;|&nbsp;
+        <a href="https://github.com/ORICAPCAVE/budget-app-starter">GitHub</a>
+    </p>
+</footer>
+
+</body>
+</html>
