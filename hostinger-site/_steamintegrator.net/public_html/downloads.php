@@ -103,30 +103,30 @@ if ($platform === '') {
 
     <p>
         <a href="<?php
-            echo htmlspecialchars(
-                'downloads.php?token=' .
-                urlencode($token) .
-                '&platform=mac',
-                ENT_QUOTES,
-                'UTF-8'
-            );
-        ?>">
-            Download for Mac
-        </a>
+    echo htmlspecialchars(
+        '/downloads.php?token=' .
+        $downloadUrl .
+        '&platform=mac',
+        ENT_QUOTES,
+        'UTF-8'
+    );
+?>">
+    Download Budget App for Mac
+</a>
     </p>
 
     <p>
         <a href="<?php
-            echo htmlspecialchars(
-                'downloads.php?token=' .
-                urlencode($token) .
-                '&platform=windows',
-                ENT_QUOTES,
-                'UTF-8'
-            );
-        ?>">
-            Download for Windows
-        </a>
+    echo htmlspecialchars(
+        '/downloads.php?token=' .
+        $downloadUrl .
+        '&platform=windows',
+        ENT_QUOTES,
+        'UTF-8'
+    );
+?>">
+    Download Budget App for Windows
+</a>
     </p>
 
     </body>

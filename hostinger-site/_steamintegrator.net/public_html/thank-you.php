@@ -95,11 +95,13 @@ if ($orderId === '') {
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_POST => true,
 
-                CURLOPT_HTTPHEADER => [
-                    'Authorization: Bearer ' .
-                        $accessToken,
-                    'Content-Type: application/json'
-                ],
+  CURLOPT_HTTPHEADER => [
+    'Authorization: Bearer ' .
+        $accessToken,
+    'Content-Type: application/json',
+    'PayPal-Request-Id: budget-capture-' .
+        $orderId
+],
 
                 CURLOPT_POSTFIELDS => '{}'
             ]);
@@ -145,12 +147,12 @@ if ($orderId === '') {
 if ($transactionId !== '') {
 
     /*
-     * Give the webhook a few seconds
-     * to insert the verified download row.
+     * Give the verified PayPal webhook time
+     * to create the secure download token.
      */
     $pdo = db();
 
-    for ($attempt = 0; $attempt < 5; $attempt++) {
+    for ($attempt = 0; $attempt < 15; $attempt++) {
 
         $stmt = $pdo->prepare(
             'SELECT download_token
@@ -167,9 +169,9 @@ if ($transactionId !== '') {
 
         if ($row !== false) {
 
-            $downloadUrl =
-                'download.php?token=' .
-                urlencode($row['download_token']);
+            $downloadUrl = urlencode(
+                $row['download_token']
+            );
 
             break;
         }
@@ -237,18 +239,34 @@ if ($transactionId !== '') {
 <?php if ($success && $downloadUrl !== ''): ?>
 
 <p>
-    Your secure download is ready.
+    Your secure downloads are ready.
 </p>
 
 <p>
     <a href="<?php
         echo htmlspecialchars(
-            $downloadUrl,
+            'downloads.php?token=' .
+            $downloadUrl .
+            '&platform=mac',
             ENT_QUOTES,
             'UTF-8'
         );
     ?>">
-        Download Budget App
+        Download Budget App for Mac
+    </a>
+</p>
+
+<p>
+    <a href="<?php
+        echo htmlspecialchars(
+            'downloads.php?token=' .
+            $downloadUrl .
+            '&platform=windows',
+            ENT_QUOTES,
+            'UTF-8'
+        );
+    ?>">
+        Download Budget App for Windows
     </a>
 </p>
 

@@ -7,7 +7,7 @@ require_once dirname(__DIR__) . '/budget-private/config.php';
 function webhookLog(string $message): void
 {
     file_put_contents(
-        dirname(__DIR__) . '/budget-private/paypal-webhook-test.log',
+        dirname(__DIR__) . '/budget-private/paypal-webhook.log',
         gmdate('Y-m-d H:i:s') . ' UTC - ' . $message . "\n",
         FILE_APPEND | LOCK_EX
     );
